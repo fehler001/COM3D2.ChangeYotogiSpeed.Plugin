@@ -1,4 +1,5 @@
 Thanks the author of COM3D2.AddYotogiSliderSE.Plugin
+
 This is just a easy partial copy of COM3D2.AddYotogiSliderSE.Plugin
 
 ## How to use
