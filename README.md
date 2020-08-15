@@ -1,4 +1,5 @@
-Thanks to the author of COM3D2.AddYotogiSliderSE.Plugin
+## COM3D2.ChangeYotogiSpeed.Plugin
+Thanks to the author of COM3D2.AddYotogiSliderSE.Plugin and COM3D2.AddYotogiSlider.Plugin
 
 This is just a easy partial copy of COM3D2.AddYotogiSliderSE.Plugin
 
