@@ -3,9 +3,6 @@ Thanks to the author of COM3D2.AddYotogiSliderSE.Plugin and COM3D2.AddYotogiSlid
 
 This is just a easy partial copy of COM3D2.AddYotogiSliderSE.Plugin
 
-
-
-
 ## How to use
 Put dll into COM3D2\BepInEx\plugins\ (need BepInEx)
 
@@ -26,12 +23,8 @@ When turning on, press "<", ">" to adjust speed change range (abs)
 " ↓ ", " ↑ " to adjust max speed up to, " ← ", " → " to adjust min speed down to
 
 
-
-
 ## Version
 0.0.1.0 is a stable version, which only contains mode1
 
 if you having issue with version 0.0.2.0, which I consider it is a beta version, please go back to 0.0.1.0
-
-
 
