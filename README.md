@@ -11,5 +11,5 @@ Put dll into COM3D2\BepInEx\plugins\ (need BepInEx)
 
 In Yotogi scene, press "Space" to turn on or turn off the plugin
 
-When turning on, press "<", ">" to adjust the speed
+When turning on, press "<", ">" to adjust speed
 
