@@ -22,14 +22,14 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
         public float speed = 1.4f;
         public float speedUpTo = 2f;
         public float speedDownTo = 0.2f;
-        public float abs = 0.2f;
+        public float abs = 0.12f;
         public int manCount = 1;
 
         // Awake is called once when both the game and the plug-in are loaded
         void Awake()
         {
             //UnityEngine.Debug.Log("Hello, world!");
-            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard ' space ' (only works in scene with maid within)");
+            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard ' S ' or ' space ' (only works in scene with maid within)");
             Update();
         }
 
@@ -82,7 +82,6 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
         public void StartMode2()
         {
-            var rand = new System.Random();
 
             this.maid = GameMain.Instance.CharacterMgr.GetMaid(0);
             if (this.maid == null) { Console.WriteLine("this.maid = null"); }
@@ -90,11 +89,32 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
             this.anm_BO_body001 = this.maid.body0.GetAnimation();
             if (this.anm_BO_body001 == null) { Console.WriteLine("this.anm_BO_body001 = null"); }
 
-            float tmp = (float)rand.NextDouble() * this.speedUpTo;
-            if ( tmp > this.speedDownTo && Math.Abs(tmp - this.speed) <= this.abs )
+            ///get random speed change
+            float rUpTo;
+            float rDownTo;
+            if (this.speed + this.abs > this.speedUpTo)
             {
-                this.speed = tmp;
+                rUpTo = this.speedUpTo;
             }
+            else
+            {
+                rUpTo = this.speed + this.abs;
+            }
+            if (this.speed - this.abs < this.speedDownTo)
+            {
+                rDownTo = this.speedDownTo;
+            }
+            else
+            {
+                rDownTo = this.speed - this.abs;
+            }
+
+            var rand = new System.Random();
+            float tmp = (float)rand.Next( 
+                (int)(rDownTo * 1000000), (int)(rUpTo * 1000000) ) / 1000000;
+
+            this.speed = tmp;
+            ///
 
             for (int i = 0; i < this.manCount; i++)
             {
@@ -156,7 +176,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Comma))
                     {
                         float tmp = this.speed - 0.2f;
-                        Console.WriteLine("Comma this.speed " + tmp);
+                        Console.WriteLine("current yotogi speed " + tmp);
                         if (tmp <= 4.0f && tmp >= 0.08f)
                         {
                             this.speed = tmp;
@@ -166,7 +186,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Period))
                     {
                         float tmp = this.speed + 0.2f;
-                        Console.WriteLine("Period this.speed " + tmp);
+                        Console.WriteLine("current yotogi speed " + tmp);
                         if (tmp <= 4.0f && tmp >= 0.08f)
                         {
                             this.speed = tmp;
@@ -203,9 +223,9 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
                     if (Input.GetKeyDown(KeyCode.Comma))
                     {
-                        float tmp = this.abs - 0.05f;
+                        float tmp = this.abs - 0.1f;
                         Console.WriteLine("speed change range (abs) " + tmp);
-                        if (tmp <= 2.0f && tmp >= 0.02f)
+                        if (tmp <= 4.0f && tmp >= 0.01f)
                         {
                             this.abs = tmp;
                         }
@@ -213,9 +233,9 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
                     if (Input.GetKeyDown(KeyCode.Period))
                     {
-                        float tmp = this.abs + 0.05f;
+                        float tmp = this.abs + 0.1f;
                         Console.WriteLine("speed change range (abs) " + tmp);
-                        if (tmp <= 2.0f && tmp >= 0.02f)
+                        if (tmp <= 4.0f && tmp >= 0.01f)
                         {
                             this.abs = tmp;
                         }
@@ -223,9 +243,9 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
                     if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
-                        float tmp = this.speedUpTo - 0.2f;
+                        float tmp = this.speedUpTo - 0.1f;
                         Console.WriteLine("max speed up to " + tmp);
-                        if (tmp <= 4.0f && tmp >= 0.08f)
+                        if (tmp <= 4.0f && tmp >= this.speedDownTo)
                         {
                             this.speedUpTo = tmp;
                         }
@@ -233,9 +253,9 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
-                        float tmp = this.speedUpTo + 0.2f;
+                        float tmp = this.speedUpTo + 0.1f;
                         Console.WriteLine("max speed up to " + tmp);
-                        if (tmp <= 4.0f && tmp >= 0.08f)
+                        if (tmp <= 4.0f && tmp >= this.speedDownTo)
                         {
                             this.speedUpTo = tmp;
                         }
@@ -244,8 +264,8 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         float tmp = this.speedDownTo - 0.1f;
-                        Console.WriteLine("min peed down to " + tmp);
-                        if (tmp <= 4.0f && tmp >= 0.08f)
+                        Console.WriteLine("min speed down to " + tmp);
+                        if (tmp <= this.speedUpTo && tmp >= 0.08f)
                         {
                             this.speedDownTo = tmp;
                         }
@@ -254,8 +274,8 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         float tmp = this.speedDownTo + 0.1f;
-                        Console.WriteLine("min peed down to " + tmp);
-                        if (tmp <= 4.0f && tmp >= 0.08f)
+                        Console.WriteLine("min speed down to " + tmp);
+                        if (tmp <= this.speedUpTo && tmp >= 0.08f)
                         {
                             this.speedDownTo = tmp;
                         }
