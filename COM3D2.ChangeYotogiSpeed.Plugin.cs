@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace COM3D2.ChangeYotogiSpeed.Plugin
 {
-    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.0")]
+    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.1")]
     public class ChangeYotogiSpeed : BaseUnityPlugin
     {
         public Maid maid;
