@@ -15,8 +15,3 @@ When turning on, press "<", ">" to adjust speed change range (abs).
 " ↓ ", " ↑ " to adjust max speed up to, " ← ", " → " to adjust min speed down to.  
   
 Either Mode turing on will turn off other Mode.  
-
-## Version
-0.0.1.0 is a stable version, which only contains Mode1.  
-If you having issue with version 0.0.2.0, which I consider it is a beta version, please go back to 0.0.1.0.  
-
