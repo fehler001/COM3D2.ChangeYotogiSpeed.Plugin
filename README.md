@@ -11,7 +11,7 @@ When turning on, press "<", ">" to adjust speed.
 
 #### Mode2 (dynamic mode)
 In Yotogi scene, press "S" to turn on or turn off the plugin.  
-When turning on, press "<", ">" to adjust speed change range (abs).  
+When turning on, press "<", ">" to adjust speed change range in one frame  
 " ↓ ", " ↑ " to adjust max speed up to, " ← ", " → " to adjust min speed down to.  
   
 Either Mode turing on will turn off other Mode.  
