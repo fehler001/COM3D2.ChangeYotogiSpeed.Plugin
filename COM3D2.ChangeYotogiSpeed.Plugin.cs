@@ -82,12 +82,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
         public void StartMode2()
         {
-
-            this.maid = GameMain.Instance.CharacterMgr.GetMaid(0);
-            if (this.maid == null) { Console.WriteLine("this.maid = null"); }
-
-            this.anm_BO_body001 = this.maid.body0.GetAnimation();
-            if (this.anm_BO_body001 == null) { Console.WriteLine("this.anm_BO_body001 = null"); }
+            var rand = new System.Random();
 
             ///get random speed change
             float rUpTo;
@@ -109,40 +104,14 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                 rDownTo = this.speed - this.abs;
             }
 
-            var rand = new System.Random();
-            float tmp = (float)rand.Next( 
-                (int)(rDownTo * 1000000), (int)(rUpTo * 1000000) ) / 1000000;
+            float tmp = (float)rand.Next(
+                (int)(rDownTo * 1000000), (int)(rUpTo * 1000000)) / 1000000;
 
             this.speed = tmp;
             ///
 
-            for (int i = 0; i < this.manCount; i++)
-            {
-                try
-                {
-                    foreach (AnimationState stat in GameMain.Instance.CharacterMgr.GetMan(i).body0.GetAnimation())
-                    {
-                        if (stat == null) { continue; }
-
-                        stat.speed = this.speed;
-                    }
-                }
-                catch
-                {
-                    this.manCount = i;
-                    break;
-                }
-            }
-
-            foreach (AnimationState stat in anm_BO_body001)
-            {
-                if (stat == null) { continue; }
-
-                stat.speed = this.speed;
-            }
-
+            StartMode1();
         }
-
 
 
         public void Update()
@@ -197,14 +166,14 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
 
 
-                ///mode2, spy on input, open close by keyboard "right alt", change variable by keyboard ' : ', ' " ' 
+                ///mode2, spy on input, open close by keyboard "S", change variable by keyboard ' < > ← → ↓ ↑ ' 
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     if (this.isMode2 == false)
                     {
                         this.isMode2 = true;
                         this.isMode1 = false;
-                        Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode2(dynamic) turned on, change speed variable by keyboard ' < > ← → ↓ ↑");
+                        Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode2(dynamic) turned on, change speed variable by keyboard ' < > ← → ↓ ↑ '");
                         this.manCount = 6; //game always stock 6 man in yotogi scene, need to reopen plugin to reset the count of man
                     }
                     else
