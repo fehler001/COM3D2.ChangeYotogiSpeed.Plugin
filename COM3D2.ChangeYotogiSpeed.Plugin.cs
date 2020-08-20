@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace COM3D2.ChangeYotogiSpeed.Plugin
 {
-    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.1")]
+    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.2")]
     public class ChangeYotogiSpeed : BaseUnityPlugin
     {
         public Maid maid;
@@ -29,7 +29,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
         void Awake()
         {
             //UnityEngine.Debug.Log("Hello, world!");
-            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard ' S ' or ' Space ' (only works in scene with maid within)");
+            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard  ;  or  ' (single quote) (only works in scene with maid within)");
             Update();
         }
 
@@ -118,10 +118,10 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
         {
             try
             {
-                ///mode1, spy on input, open close by keyboard "space", change speed variable by keyboard "<", ">"
-                if (Input.GetKeyDown(KeyCode.Space))
+                ///mode1, spy on input, open close by keyboard "Semicolon", change speed variable by keyboard "<", ">"
+                if (Input.GetKeyDown(KeyCode.Semicolon))
                 {
-                    //Console.WriteLine("space");
+                    //Console.WriteLine("Semicolon");
                     if (this.isMode1 == false)
                     {
                         this.isMode1 = true;
@@ -166,8 +166,8 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
 
 
-                ///mode2, spy on input, open close by keyboard "S", change variable by keyboard ' < > ← → ↓ ↑ ' 
-                if (Input.GetKeyDown(KeyCode.S))
+                ///mode2, spy on input, open close by keyboard " ' ", change variable by keyboard ' < > ← → ↓ ↑ ' 
+                if (Input.GetKeyDown(KeyCode.Quote))
                 {
                     if (this.isMode2 == false)
                     {
