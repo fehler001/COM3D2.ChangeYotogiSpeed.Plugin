@@ -29,7 +29,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
         void Awake()
         {
             //UnityEngine.Debug.Log("Hello, world!");
-            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard ' S ' or ' space ' (only works in scene with maid within)");
+            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard ' S ' or ' Space ' (only works in scene with maid within)");
             Update();
         }
 
@@ -126,7 +126,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     {
                         this.isMode1 = true;
                         this.isMode2 = false;
-                        Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode1(constant mode) turned on, change speed variable by keyboard ' < ', ' > '");
+                        Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode1(constant mode) turned on, change speed variable by keyboard  <  > ");
                         this.manCount = 6; //game always stock 6 man in yotogi scene, need to reopen plugin to reset the count of man
                     }
                     else
@@ -173,7 +173,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     {
                         this.isMode2 = true;
                         this.isMode1 = false;
-                        Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode2(dynamic) turned on, change speed variable by keyboard ' < > ← → ↓ ↑ '");
+                        Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode2(dynamic) turned on, change speed variable by keyboard < > ← → ↓ ↑ ");
                         this.manCount = 6; //game always stock 6 man in yotogi scene, need to reopen plugin to reset the count of man
                     }
                     else
@@ -193,7 +193,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Comma))
                     {
                         float tmp = this.abs - 0.1f;
-                        Console.WriteLine("speed change range (abs) " + tmp);
+                        Console.WriteLine("speed change range in one frame " + tmp);
                         if (tmp <= 4.0f && tmp >= 0.01f)
                         {
                             this.abs = tmp;
@@ -203,7 +203,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Period))
                     {
                         float tmp = this.abs + 0.1f;
-                        Console.WriteLine("speed change range (abs) " + tmp);
+                        Console.WriteLine("speed change range in one frame " + tmp);
                         if (tmp <= 4.0f && tmp >= 0.01f)
                         {
                             this.abs = tmp;
