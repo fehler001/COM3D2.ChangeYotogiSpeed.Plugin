@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace COM3D2.ChangeYotogiSpeed.Plugin
 {
-    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.2")]
+    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.3")]
     public class ChangeYotogiSpeed : BaseUnityPlugin
     {
         public Maid maid;
@@ -39,23 +39,23 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
             ///get maid0 animation
             this.maid = GameMain.Instance.CharacterMgr.GetMaid(0);
             if (this.maid == null) { Console.WriteLine("this.maid = null"); }
-            
+
             this.anm_BO_body001 = this.maid.body0.GetAnimation();
             if (this.anm_BO_body001 == null) { Console.WriteLine("this.anm_BO_body001 = null"); }
             ///
-            
+
             ///change animation speed
             foreach (AnimationState stat in anm_BO_body001)
             {
-                if (stat == null) 
+                if (stat == null)
                 {
                     Console.WriteLine(stat + " = null");
-                    continue; 
+                    continue;
                 }
-                stat.speed = this.speed;            
+                stat.speed = this.speed;
             }
-            
-            for ( int i = 0; i < this.manCount; i++)
+
+            for (int i = 0; i < this.manCount; i++)
             {
                 try
                 {
@@ -175,6 +175,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                         this.isMode1 = false;
                         Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin mode2(dynamic) turned on, change speed variable by keyboard < > ← → ↓ ↑ ");
                         this.manCount = 6; //game always stock 6 man in yotogi scene, need to reopen plugin to reset the count of man
+                        this.speed = (this.speedUpTo + this.speedDownTo) / 2; // in case float rUpto small than float rDownTo
                     }
                     else
                     {
@@ -259,7 +260,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                 this.isMode2 = false;
                 Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin turned off ( no maid in the scene ) ");
             }
-        ///
+            ///
         }
 
     }
