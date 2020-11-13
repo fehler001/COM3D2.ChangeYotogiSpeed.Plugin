@@ -14,4 +14,4 @@ In Yotogi scene, press " ' "(single quote) to turn on or turn off the plugin.
 When turning on, press "<", ">" to adjust speed change range in one frame  
 " ↓ ", " ↑ " to adjust max speed up to, " ← ", " → " to adjust min speed down to.  
   
-Either Mode turing on will turn off other Mode.  
+Either Mode turning on will turn off other Mode.  
