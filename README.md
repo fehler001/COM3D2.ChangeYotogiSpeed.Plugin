@@ -17,7 +17,7 @@ When turning on, press "<", ">" to adjust speed change range in one frame
   
 Either Mode turning on will turn off other Mode.  
   
-  
+##
 #### Toggle orthographic or Perspective view
 'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or Perspective view
   
