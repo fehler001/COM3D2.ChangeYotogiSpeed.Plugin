@@ -1,7 +1,7 @@
 ## COM3D2.ChangeYotogiSpeed.Plugin
 A COM3D2 plugin to adjust yotogi(animation) speed (inspired by COM3D2.AddYotogiSlider.Plugin)  
-Toggle orthographic or Perspective of camera view  
-Adjust field of view in Perspective view (inspired by COM3D2.YotogiUtil.plugin)  
+Toggle orthographic or perspective of camera view  
+Adjust field of view in perspective view (inspired by COM3D2.YotogiUtil.plugin)  
 
 ## How to use
 Put dll into COM3D2\BepInEx\plugins\ (need BepInEx).  
@@ -19,7 +19,9 @@ Either Mode turning on will turn off other Mode.
   
 ##
 #### Toggle orthographic or Perspective view
-'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or Perspective view
+'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or perspective view  
+Advice: toggle back to perspective view before go to another scene  
+If you go to another scene with toggled in orthographic view, and you feel something weird, you can toggle back to perspective view, then go to another scene, then go back, toggle to orthographic view, this should fix that weird(maybe?)
   
 #### Adjust field of view
 In perspective view:  
