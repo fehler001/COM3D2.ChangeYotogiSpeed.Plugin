@@ -11,25 +11,37 @@ using System.Collections;
 
 namespace COM3D2.ChangeYotogiSpeed.Plugin
 {
-    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.2.3")]
+    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.3.0")]
     public class ChangeYotogiSpeed : BaseUnityPlugin
     {
         public Maid maid;
         public Animation anm_BO_body001;
+        public Camera camera;
+        public bool IsPespective = true;
+
+        public bool leftControlDown = false;
+        public bool leftAltDown = false;
+        public bool rightControlDown = false;
+        public bool rightAltDown = false;
 
         public bool isMode1 = false;
         public bool isMode2 = false;
         public float speed = 1.4f;
-        public float speedUpTo = 2f;
-        public float speedDownTo = 0.2f;
+        public float speedUpTo = 2.0f;
+        public float speedDownTo = 1.2f;
         public float abs = 0.12f;
         public int manCount = 1;
+
+        public Vector3 cameraPosition;
+        public float orthoSize = 0.5f;
 
         // Awake is called once when both the game and the plug-in are loaded
         void Awake()
         {
             //UnityEngine.Debug.Log("Hello, world!");
-            Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard  ;  or  ' (single quote) (only works in scene with maid within)");
+            UnityEngine.Debug.Log("COM3D2.ChangeYotogiSpeed.Plugin loaded, turning on by keyboard  ;  or  ' (single quote) (only works in scene with maid within)");
+            UnityEngine.Debug.Log("'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or Perspective of camera view");
+            UnityEngine.Debug.Log("'Right Alt'+ '[', 'Right Alt' + ']' to adjust field of view, 'Right Alt' + 'backslash' to reset field of view to 35");
             Update();
         }
 
@@ -84,7 +96,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
         {
             var rand = new System.Random();
 
-            ///get random speed change
+            ///get random speed change value
             float rUpTo;
             float rDownTo;
             if (this.speed + this.abs > this.speedUpTo)
@@ -104,8 +116,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                 rDownTo = this.speed - this.abs;
             }
 
-            float tmp = (float)rand.Next(
-                (int)(rDownTo * 1000000), (int)(rUpTo * 1000000)) / 1000000;
+            float tmp = (float)rand.Next( (int)(rDownTo * 1000000), (int)(rUpTo * 1000000) )  / 1000000;
 
             this.speed = tmp;
             ///
@@ -116,6 +127,60 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
 
         public void Update()
         {
+            ///detect left control down or up
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                //Console.WriteLine("left control down");
+                this.leftControlDown = true;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                //Console.WriteLine("left control up");
+                this.leftControlDown = false;
+            }
+            ///
+
+            ///detect right control down or up
+            if (Input.GetKeyDown(KeyCode.RightControl))
+            {
+                //Console.WriteLine("right control down");
+                this.rightControlDown = true;
+            }
+            if (Input.GetKeyUp(KeyCode.RightControl))
+            {
+                //Console.WriteLine("right control up");
+                this.rightControlDown = false;
+            }
+            ///
+
+            ///detect left alt down or up
+            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            {
+                //Console.WriteLine("left alt down");
+                this.leftAltDown = true;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftAlt))
+            {
+                //Console.WriteLine("left alt up");
+                this.leftAltDown = false;
+            }
+            ///
+
+            ///detect right alt down or up
+            if (Input.GetKeyDown(KeyCode.RightAlt))
+            {
+                //Console.WriteLine("right alt down");
+                this.rightAltDown = true;
+            }
+            if (Input.GetKeyUp(KeyCode.RightAlt))
+            {
+                //Console.WriteLine("right alt up");
+                this.rightAltDown = false;
+            }
+            ///
+
+
+
             try
             {
                 ///mode1, spy on input, open close by keyboard "Semicolon", change speed variable by keyboard "<", ">"
@@ -186,7 +251,6 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     }
                 }
 
-
                 if (this.isMode2 == true)
                 {
                     this.StartMode2();
@@ -214,7 +278,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
                         float tmp = this.speedUpTo - 0.1f;
-                        Console.WriteLine("max speed up to " + tmp);
+                        Console.WriteLine("maximum speed " + tmp);
                         if (tmp <= 4.0f && tmp >= this.speedDownTo)
                         {
                             this.speedUpTo = tmp;
@@ -224,7 +288,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
                         float tmp = this.speedUpTo + 0.1f;
-                        Console.WriteLine("max speed up to " + tmp);
+                        Console.WriteLine("maximum speed " + tmp);
                         if (tmp <= 4.0f && tmp >= this.speedDownTo)
                         {
                             this.speedUpTo = tmp;
@@ -234,7 +298,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         float tmp = this.speedDownTo - 0.1f;
-                        Console.WriteLine("min speed down to " + tmp);
+                        Console.WriteLine("minimum speed " + tmp);
                         if (tmp <= this.speedUpTo && tmp >= 0.08f)
                         {
                             this.speedDownTo = tmp;
@@ -244,7 +308,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         float tmp = this.speedDownTo + 0.1f;
-                        Console.WriteLine("min speed down to " + tmp);
+                        Console.WriteLine("minimum speed " + tmp);
                         if (tmp <= this.speedUpTo && tmp >= 0.08f)
                         {
                             this.speedDownTo = tmp;
@@ -254,6 +318,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                 }
             }
             ///mode2
+            
             catch
             {
                 this.isMode1 = false;
@@ -261,6 +326,114 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                 Console.WriteLine("COM3D2.ChangeYotogiSpeed.Plugin turned off ( no maid in the scene ) ");
             }
             ///
+
+
+
+            ///toggle Parallel ( orthographic called in unity3d ) or Perspective view
+            try
+            {
+                if(this.rightAltDown == true)
+                {
+                    if (Input.GetKeyDown(KeyCode.O))
+                    {
+                        this.camera = GameMain.Instance.MainCamera.camera;
+                        this.camera.orthographic = true;
+                        this.cameraPosition = this.camera.transform.position;   // lock camera.transform.position ( I think this should not be changed in orthographic)
+                        this.camera.orthographicSize = this.orthoSize;
+                        this.IsPespective = false;
+                        //Console.WriteLine("camera.orthographic = true");
+                        //Console.WriteLine("'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or Perspective of camera view");
+                    }
+                }
+                if (this.rightAltDown == true)
+                {
+                    if (Input.GetKeyDown(KeyCode.P))
+                    {
+                        this.camera = GameMain.Instance.MainCamera.camera;
+                        this.camera.orthographic = false;
+                        this.IsPespective = true;
+                        //Console.WriteLine("camera.orthographic = false");
+                        //Console.WriteLine("'Right Alt'+ '[', 'Right Alt' + ']' to adjust field of view, 'Right Alt' + 'backslash' to reset field of view to 35");
+                    }
+                }
+                
+                
+                if (this.IsPespective == false)
+                {
+                    if( Input.mouseScrollDelta != new Vector2(0.0f, 0.0f) )
+                    {
+                        this.camera.transform.position = this.cameraPosition;
+                        //Console.WriteLine("camera.transform.position = " + this.camera.transform.position);
+                
+                        float tmp = this.orthoSize - Input.mouseScrollDelta.y * (float)0.01;
+                        if (tmp >= 0.1f && tmp <= 2f)   // just from my opinion
+                        {
+                            this.orthoSize = tmp;
+                            this.camera.orthographicSize = this.orthoSize;
+                            //Console.WriteLine("camera.orthographicSize = " + this.orthoSize);
+                        }
+                    }
+                }
+                
+
+                //adjust field of view
+                if (this.IsPespective == true)
+                {
+                    if (this.rightAltDown == true)
+                    {
+                        if (Input.GetKeyDown(KeyCode.LeftBracket))
+                        {
+                            this.camera = GameMain.Instance.MainCamera.camera;
+                            if (this.camera.fieldOfView >= 10)
+                            {
+                                this.camera.fieldOfView = this.camera.fieldOfView - 1f;
+                                //Console.WriteLine("camera.fieldOfView = " + this.camera.fieldOfView + "   ( default is 35 )");
+                            }
+                        }
+                
+                        if (Input.GetKeyDown(KeyCode.RightBracket))
+                        {
+                            this.camera = GameMain.Instance.MainCamera.camera;
+                            if (this.camera.fieldOfView <= 60)
+                            {
+                                this.camera.fieldOfView = this.camera.fieldOfView + 1f;
+                                //Console.WriteLine("camera.fieldOfView = " + this.camera.fieldOfView + "   ( default is 35 )");
+                            }
+                        }
+                
+                        if (Input.GetKeyDown(KeyCode.Backslash))
+                        {
+                            this.camera = GameMain.Instance.MainCamera.camera;
+                            this.camera.fieldOfView = 35f;
+                            //Console.WriteLine("camera.fieldOfView = " + this.camera.fieldOfView + "   ( default is 35 )");
+                        }
+                
+                    }
+                }
+                ///
+                
+                
+                //debug
+                //if (Input.GetKeyDown(KeyCode.Q))
+                //{
+                //    if(this.IsPespective == false)
+                //    {
+                //        Console.WriteLine(this.camera.orthographicSize);
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine(this.camera.fieldOfView);
+                //    }
+                //}
+
+
+            }
+            catch
+            {
+                Console.WriteLine("Toggle perspective view got wrong");
+            }
+
+
         }
 
     }
