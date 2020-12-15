@@ -18,7 +18,7 @@ When turning on, press "<", ">" to adjust speed change range in one frame
 Either Mode turning on will turn off other Mode.  
   
 ##
-#### Toggle orthographic or Perspective view
+#### Toggle orthographic or perspective view
 'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or perspective view  
 Advice: toggle back to perspective view before go to another scene  
 If you go to another scene with toggled in orthographic view, and you feel something weird, you can toggle back to perspective view, then go to another scene, then go back, toggle to orthographic view, this should fix that weird(maybe?)
@@ -26,5 +26,7 @@ If you go to another scene with toggled in orthographic view, and you feel somet
 #### Adjust field of view
 In perspective view:  
 'Right Alt'+ '[', 'Right Alt' + ']' to adjust field of view  
-'Right Alt' + 'backslash' to reset field of view to 35
+'Right Alt' + 'backslash' to reset field of view to 35  
+  
+Neither two of above works in karaoke mode
 
