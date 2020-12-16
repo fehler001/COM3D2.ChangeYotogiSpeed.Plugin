@@ -20,8 +20,7 @@ Either Mode turning on will turn off other Mode.
 ##
 #### Toggle orthographic or perspective view
 'Right Alt' + 'O', 'Right Alt' + 'P' to toggle orthographic or perspective view  
-Advice: toggle back to perspective view before go to another scene  
-If you go to another scene with toggled in orthographic view, and you feel something weird, you can toggle back to perspective view, then go to another scene, then go back, toggle to orthographic view, this should fix that weird(maybe?)
+If camera get through your maid's head in orthographic view, toggle back to perspective view and scroll away from your maid then toggle to orthographic view
   
 #### Adjust field of view
 In perspective view:  
