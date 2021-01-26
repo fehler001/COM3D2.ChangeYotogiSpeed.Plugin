@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace COM3D2.ChangeYotogiSpeed.Plugin
 {
-    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.3.0")]
+    [BepInPlugin("COM3D2.ChangeYotogiSpeed.Plugin", "Change Yotogi Speed", "0.0.3.1")]
     public class ChangeYotogiSpeed : BaseUnityPlugin
     {
         public Maid maid;
@@ -28,12 +28,12 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
         public bool isMode2 = false;
         public float speed = 1.4f;
         public float speedUpTo = 2.0f;
-        public float speedDownTo = 1.2f;
+        public float speedDownTo = 1.21f;
         public float abs = 0.12f;
         public int manCount = 1;
 
         public Vector3 cameraPosition;
-        public float orthoSize = 0.5f;
+        public float orthoSize = 0.3f;
 
         // Awake is called once when both the game and the plug-in are loaded
         void Awake()
@@ -210,7 +210,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Comma))
                     {
                         float tmp = this.speed - 0.2f;
-                        Console.WriteLine("current yotogi speed " + tmp);
+                        Console.WriteLine("current yotogi speed = " + tmp);
                         if (tmp <= 4.0f && tmp >= 0.08f)
                         {
                             this.speed = tmp;
@@ -220,7 +220,7 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Period))
                     {
                         float tmp = this.speed + 0.2f;
-                        Console.WriteLine("current yotogi speed " + tmp);
+                        Console.WriteLine("current yotogi speed = " + tmp);
                         if (tmp <= 4.0f && tmp >= 0.08f)
                         {
                             this.speed = tmp;
@@ -258,8 +258,8 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Comma))
                     {
                         float tmp = this.abs - 0.1f;
-                        Console.WriteLine("speed change range in one frame " + tmp);
-                        if (tmp <= 4.0f && tmp >= 0.01f)
+                        Console.WriteLine("speed change range in one frame = " + tmp);
+                        if (tmp > 0.01f)
                         {
                             this.abs = tmp;
                         }
@@ -268,38 +268,40 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.Period))
                     {
                         float tmp = this.abs + 0.1f;
-                        Console.WriteLine("speed change range in one frame " + tmp);
-                        if (tmp <= 4.0f && tmp >= 0.01f)
+                        Console.WriteLine("speed change range in one frame = " + tmp);
+                        if (tmp < 1.0f)
                         {
                             this.abs = tmp;
-                        }
-                    }
-
-                    if (Input.GetKeyDown(KeyCode.DownArrow))
-                    {
-                        float tmp = this.speedUpTo - 0.1f;
-                        Console.WriteLine("maximum speed " + tmp);
-                        if (tmp <= 4.0f && tmp >= this.speedDownTo)
-                        {
-                            this.speedUpTo = tmp;
                         }
                     }
 
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
                         float tmp = this.speedUpTo + 0.1f;
-                        Console.WriteLine("maximum speed " + tmp);
-                        if (tmp <= 4.0f && tmp >= this.speedDownTo)
+                        Console.WriteLine("max speed = " + tmp);
+                        if (tmp < 4.0f && tmp > this.speedDownTo)
                         {
                             this.speedUpTo = tmp;
                         }
                     }
 
+                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        float tmp = this.speedUpTo - 0.1f;
+                        Console.WriteLine("max speed = " + tmp);
+                        if (tmp > this.speedDownTo)
+                        {
+                            this.speedUpTo = tmp;
+                            this.speed = (this.speedUpTo + this.speedDownTo) / 2;
+                            this.StartMode1();  // in case float rUpto small than float rDownTo
+                        }
+                    }                        
+                        
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         float tmp = this.speedDownTo - 0.1f;
-                        Console.WriteLine("minimum speed " + tmp);
-                        if (tmp <= this.speedUpTo && tmp >= 0.08f)
+                        Console.WriteLine("min speed = " + tmp);
+                        if (tmp > 0.08f)
                         {
                             this.speedDownTo = tmp;
                         }
@@ -308,10 +310,12 @@ namespace COM3D2.ChangeYotogiSpeed.Plugin
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         float tmp = this.speedDownTo + 0.1f;
-                        Console.WriteLine("minimum speed " + tmp);
-                        if (tmp <= this.speedUpTo && tmp >= 0.08f)
+                        Console.WriteLine("min speed = " + tmp);
+                        if (tmp < this.speedUpTo)
                         {
                             this.speedDownTo = tmp;
+                            this.speed = (this.speedUpTo + this.speedDownTo) / 2;
+                            this.StartMode1();  // in case float rUpto small than float rDownTo
                         }
                     }
 
